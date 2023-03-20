@@ -40,9 +40,8 @@ class System(CustomSystem):
         finally:
             file.close()
         
-    def export_to_csv(self, item, mode='a'):
-        csv_file_name = 'report-iam-policy-analyzer.csv'
-        with open(csv_file_name, mode, encoding='UTF8', newline='') as f:
+    def export_to_csv(self, file_name, item, mode='a'):
+        with open(file_name, mode, encoding='UTF8', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(item)
 

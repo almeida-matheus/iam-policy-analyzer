@@ -12,7 +12,7 @@ class Printer:
         questions = [
             inquirer.Path(
                 "file_name",
-                message="json file containing the iam actions and resources for performing the scan",
+                message="json file containing the AWS actions and resources for performing the scan",
                 path_type=inquirer.Path.FILE,
                 exists=True,
             ),
@@ -24,7 +24,14 @@ class Printer:
             ),
             inquirer.Confirm(
                 'match_all_actions',
-                message="must it contain all iam actions and resources specified?", default=False)
+                message="must it contain all iam actions and resources specified?", 
+                default=False
+            ),
+            inquirer.Text(
+                'output_file_name',
+                message='output file name',
+                default='report-iam-policy-analyzer.csv'
+            )
         ]
         answers = inquirer.prompt(questions)
         return answers
