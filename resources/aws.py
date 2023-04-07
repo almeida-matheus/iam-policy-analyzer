@@ -1,6 +1,9 @@
 import boto3
 from botocore.exceptions import ClientError
 import time
+import logging
+
+logging.getLogger(__name__)
 
 class AWS:
 
@@ -45,13 +48,13 @@ class AWS:
             )
         except ClientError as e:
             if e.response['Error']['Code'] == 'ThrottlingException':
-                if tries <= 3:
-                    print('throttling exception occured. retrying attempt no.: {}'.format(str(tries)))
+                if tries <= 4:
+                    logging.warning('Throttling exception occured. retrying attempt no.: {}'.format(str(tries)))
                     time.sleep(3*tries)
                     return self.simulate_policy(arn, actions, resources, match_all_actions, tries+1)
                 else:
-                    print('attempted 3 times but no success. raising throttling exception')
-                    raise e
+                    raise Exception('AWS API throttling error - many requests')
+        
         else:
             #? simple report - check if the principal have allowed some actions in the specific resource
             if match_all_actions: #? must contain all specified actions

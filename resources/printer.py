@@ -1,6 +1,7 @@
 from datetime import datetime, time
 import time
 import inquirer
+import os
 
 class Printer:
 
@@ -9,32 +10,50 @@ class Printer:
     
     def select_options(self, profiles):
         # todo - add option to detailed or simple report and report to resource level or not
+        # todo - add custom dir - output different formats (csv, json, html, etc)
         questions = [
             inquirer.Path(
                 "file_name",
-                message="json file containing the AWS actions and resources for performing the scan",
+                message="Json file with AWS actions and resources to check identities with these permissions",
                 path_type=inquirer.Path.FILE,
-                exists=True,
+                exists=True
             ),
             inquirer.Checkbox(
                 'profiles',
-                message="select the profile/account to analyze using AWS API calls",
+                message="Select the profile/account to analyze using AWS API calls",
                 choices=profiles,
-                default='all',
+                default='all'
             ),
             inquirer.Confirm(
                 'match_all_actions',
-                message="must it contain all iam actions and resources specified?", 
+                message="Show only identities that contain all specified AWS actions and resources?", 
                 default=False
             ),
             inquirer.Text(
                 'output_file_name',
-                message='output file name',
+                message='Output file name',
                 default='report-iam-policy-analyzer.csv'
             )
         ]
         answers = inquirer.prompt(questions)
         return answers
+    
+    def script_header(self):
+        os.system('clear||cls')
+        print('---------------------------------------------------------------------')
+        print('                        IAM POLICY ANALYZER                          ')
+        print('---------------------------------------------------------------------')
+        print('Example json file policy:')
+        print('')
+        print('{')
+        print('  "actions": [')
+        print('    "aws:Action"')
+        print('  ],')
+        print('  "resources": [')
+        print('    "arn:aws:x:x:x:x"')
+        print('  ]')
+        print('}')
+        print('')
 
     def execution_header(self, account_id, actions, resources):
         print('---------------------------------------------------------------------')
