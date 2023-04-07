@@ -1,0 +1,9 @@
+{
+  "actions": [
+    "dynamodb:BatchGetItem",
+    "dynamodb:GetItem"
+  ],
+  "resources": [
+    "arn:aws:dynamodb:us-east-1:123456789012:table/my-personal-table"
+  ]
+}

@@ -8,7 +8,7 @@ class CustomSystem:
     def validate_json_content(self, json_content):
         ''' validate all required json file fields for scripting '''
         keys_to_validate = ['actions', 'resources']
-        
+
         def validate_fiels(key):
             ''' check invalid values (None, empty) '''
             if not key in json_content:
@@ -45,7 +45,7 @@ class System(CustomSystem):
                 os.makedirs(path)
         except:
             raise OSError(f'Cannot create directory here: {self.actual_path}')
-        
+
     def export_to_csv(self, file_name, item, mode='a'):
         path_file = self.actual_path + file_name
         try:
@@ -54,4 +54,3 @@ class System(CustomSystem):
                 writer.writerow(item)
         except Exception as e:
             raise Exception(f'Unable to export CSV file: {e}')
-    

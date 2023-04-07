@@ -7,7 +7,7 @@ class Printer:
 
     def __init__(self):
         self.start_code_time = time.time()
-    
+
     def select_options(self, profiles):
         # todo - add option to detailed or simple report and report to resource level or not
         # todo - add custom dir - output different formats (csv, json, html, etc)
@@ -26,7 +26,7 @@ class Printer:
             ),
             inquirer.Confirm(
                 'match_all_actions',
-                message="Show only identities that contain all specified AWS actions and resources?", 
+                message="Show only identities that contain all specified AWS actions and resources?",
                 default=False
             ),
             inquirer.Text(
@@ -37,7 +37,7 @@ class Printer:
         ]
         answers = inquirer.prompt(questions)
         return answers
-    
+
     def script_header(self):
         os.system('clear||cls')
         print('---------------------------------------------------------------------')
@@ -57,12 +57,12 @@ class Printer:
 
     def execution_header(self, account_id, actions, resources):
         print('---------------------------------------------------------------------')
-        print('Analyzing permissions of the entities of the {} AWS account'.format(account_id))
+        print('Analyzing permissions of the identities of the {} AWS account'.format(account_id))
         print('---------------------------------------------------------------------')
-        print('- Current Time:')
+        print('- Current time:')
         print('  - {}'.format(str(datetime.now())))
         print('')
-        print('- Input Parameters:')
+        print('- Input parameters:')
         print('  - Actions:')
         for action in actions:
             print('    - {}'.format(action))
@@ -70,15 +70,15 @@ class Printer:
         for resource in resources:
             print('    - {}'.format(resource))
         print('')
-        print(' - Identified Entities:')
-    
+        print(' - Identified identities:')
+
     def execution_body(self, name, resource):
-        print('  - Entity Arn:')
+        print('  - Entity arn:')
         print('    - {}'.format(name))
         print('  - Resource:')
         print('    - {}'.format(resource))
         print('')
-    
+
     def execution_footer(self):
         print('---------------------------------------------------------------------')
         print("Runtime in seconds: {}".format(round(time.time() - self.start_code_time,2)))

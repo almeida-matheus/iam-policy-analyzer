@@ -29,7 +29,7 @@ class AWS:
             for role in page['Roles']:
                 all_roles.append(role)
         return all_roles
-    
+
     def list_all_users(self):
         all_roles = list()
         paginator = self.iam_client.get_paginator('list_users')
@@ -54,7 +54,7 @@ class AWS:
                     return self.simulate_policy(arn, actions, resources, match_all_actions, tries+1)
                 else:
                     raise Exception('AWS API throttling error - many requests')
-        
+
         else:
             #? simple report - check if the principal have allowed some actions in the specific resource
             if match_all_actions: #? must contain all specified actions
