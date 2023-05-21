@@ -11,7 +11,7 @@
 <br>
 
 ## About
-Command line tool to list all AWS IAM entities (users, roles) of one or more AWS accounts based on actions and resources declared in a json file that correspond to the permissions in IAM policies of the identities
+Command line tool to list all AWS IAM identities (users, roles) of one or more AWS accounts that have AWS permission based on a desired action and resource
 
 <img src="./assets/iam-policy-analyzer.gif" alt="iam-policy-analyzer">
 
@@ -33,12 +33,12 @@ Example file:
 }
 ```
 
-Running the script will result in a report in csv format like this:
+Executing the script will result in a report in csv format that will show all identities with that permission, example:
 
 account      | arn                                  | name  | actions                                        | resource
 ------------ | ------------------------------------ | ----- | ---------------------------------------------- | --------
 123456789012 | arn:aws:iam::123456789012:role/ADMIN | ADMIN | ['dynamodb:GetItem','dynamodb:BatchGetItem'] | arn:aws:dynamodb:us-east-1:123456789012:table/my-personal-table
-123456789012 | arn:aws:iam::123456789012:user/USER  | ADMIN | ['dynamodb:GetItem','dynamodb:BatchGetItem'] | arn:aws:dynamodb:us-east-1:123456789012:table/my-personal-table
+123456789012 | arn:aws:iam::123456789012:user/USER  | USER | ['dynamodb:GetItem','dynamodb:BatchGetItem'] | arn:aws:dynamodb:us-east-1:123456789012:table/my-personal-table
 
 <!-- INSTALATION -->
 ## Installation
