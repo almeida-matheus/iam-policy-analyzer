@@ -14,20 +14,12 @@ printer = Printer()
 if __name__ == '__main__':
     try:
         printer.script_header()
-
         profiles = aws.get_available_profiles()
-        profiles_plus_all = ['all'] + list(profiles)
-        answers = printer.select_options(profiles_plus_all)
-
+        answers = printer.select_options(profiles)
         desired_policy = system.get_json_file_content(answers['file_name'])
-
-        profiles_to_analyze = answers['profiles']
-        if answers['profiles'] == ['all']:
-            profiles_to_analyze = profiles
-
         data_analyzed_results = list()
 
-        for profile in profiles_to_analyze:
+        for profile in answers['profiles']:
             aws = AWS(profile)
             account_id = aws.get_account_id()
             printer.execution_header(account_id,desired_policy['actions'],desired_policy['resources'])
@@ -52,7 +44,7 @@ if __name__ == '__main__':
         system.export_to_csv(answers['output_file_name'],['account','arn','name','actions','resource'], mode='w')
         for item in data_analyzed_results:
             system.export_to_csv(answers['output_file_name'],[item['accountId'],item['arn'],item['name'],item['actions'],item['resource']])
-        
+
         printer.execution_footer()
 
     except Exception as e:
